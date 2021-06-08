@@ -7,10 +7,13 @@
 /// @param layer
 function tile_meeting(_x, _y, _layer){
 	var _tm = layer_tilemap_get_id(_layer);
+	
 	var _x1 = tilemap_get_cell_x_at_pixel(_tm, bbox_left + (_x -x),y),
-	var _y1 = tilemap_get_cell_y_at_pixel(_tm, x, bbox_top + (_y -y)),
-	var _x2 = tilemap_get_cell_x_at_pixel(_tm, bbox_right + (_x -x),y),
-	var _y2 = tilemap_get_cell_y_at_pixel(_tm, x, bbox_bottom + (_y -y));
+	_y1 = tilemap_get_cell_y_at_pixel(_tm, x, bbox_top + (_y -y)),
+	_x2 = tilemap_get_cell_x_at_pixel(_tm, bbox_right + (_x -x),y),
+	_y2 = tilemap_get_cell_y_at_pixel(_tm, x, bbox_bottom + (_y -y));
+	
+	//show_debug_message(string(_x1)+","+string(_y1));
 	
 	for(var x_temp = _x1; x_temp <= _x2; x_temp++){
 		for(var y_temp = _y1; y_temp <= _y2; y_temp++){
