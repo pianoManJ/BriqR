@@ -4,7 +4,7 @@ input_left = keyboard_check(ord("A"));
 input_right = keyboard_check(ord("D"));
 input_jump_press = keyboard_check_pressed(ord("J"));
 input_jump_down = keyboard_check(ord("J"));
-
+input_brake = keyboard_check(ord("K"));
 //horizontal movement
 
 //test subpixel movement
@@ -20,11 +20,20 @@ if(input_left){
 }else if(input_right){
 	h_spd += speed_up_ground;
 }else{
-	if(sign(h_spd) != sign(h_spd+sign(-0.1*sign(h_spd)))){
+	if(sign(h_spd) != sign(h_spd+sign(-1*slow_down*sign(h_spd)))){
 		h_spd = 0;
 	}else{
-		h_spd += -0.1*sign(h_spd);
+		h_spd += -1*slow_down*sign(h_spd);
 	}
+}
+
+if(input_brake && is_grounded){
+	if(sign(h_spd) != sign(h_spd+sign(-1 * brake_acc*sign(h_spd)))){
+		h_spd = 0;
+	}else{
+		h_spd -= sign(h_spd)* brake_acc;
+	}
+	briq_temp += abs(h_spd);
 }
 
 //vertical movement
@@ -84,3 +93,9 @@ if(will_collide_x){//x position calculations
 	x = round(exact_x);
 }
 
+if(briq_temp >= briq_temp_MAX){
+	briq_temp = 0;
+	if(briq_charge < briq_charge_MAX){
+		briq_charge += 1;
+	}
+}

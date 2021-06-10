@@ -5,6 +5,7 @@
     {"id":{"name":"ts_test","path":"tilesets/ts_test/ts_test.yy",},"order":0,},
     {"id":{"name":"o_player","path":"objects/o_player/o_player.yy",},"order":0,},
     {"id":{"name":"test_wall","path":"sprites/test_wall/test_wall.yy",},"order":1,},
+    {"id":{"name":"o_game","path":"objects/o_game/o_game.yy",},"order":1,},
     {"id":{"name":"player_t","path":"sprites/player_t/player_t.yy",},"order":0,},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":0,},
   ],
