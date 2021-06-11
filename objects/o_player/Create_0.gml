@@ -1,5 +1,7 @@
 /// @description Setup of player character
-show_debug_message("start y: "+string(ystart));
+//debug mode variable
+d_mode_on = false;
+input_d_mode = false;
 
 //position variables
 exact_x = xstart;
@@ -31,3 +33,4 @@ briq_temp_MAX = 200;
 briq_charge_MAX = 8;
 briq_temp = 0;
 briq_charge = 0;
+can_long_jump = false;

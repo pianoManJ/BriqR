@@ -5,6 +5,14 @@ input_right = keyboard_check(ord("D"));
 input_jump_press = keyboard_check_pressed(ord("J"));
 input_jump_down = keyboard_check(ord("J"));
 input_brake = keyboard_check(ord("K"));
+input_ignite = keyboard_check_pressed(ord("H"));
+input_d_mode = keyboard_check_pressed(vk_enter);
+
+//debug mode toggle
+if(input_d_mode){
+	d_mode_on = abs(d_mode_on-1); //should switch d_mode_on between true and false
+}
+
 //horizontal movement
 
 //test subpixel movement
@@ -38,6 +46,19 @@ if(input_brake && is_grounded){
 
 //vertical movement
 v_spd += grav;
+if(input_ignite && briq_charge > 0){
+	briq_charge -= 1;
+	if(is_grounded){
+		if(h_spd != 0){
+			can_long_jump = true;
+			alarm_set(0, 40);
+		}
+	}else{
+		v_spd = -5;
+		jump_held = false;
+		alarm_set(0, -1);
+	}
+}
 
 //jump logic
 if(input_jump_down && jump_held){
@@ -46,10 +67,19 @@ if(input_jump_down && jump_held){
 	jump_held = false;
 	alarm_set(0, -1);
 }
+
 if((input_jump_press && is_grounded)){//logic for starting jump from ground
-	v_spd = jump_spd;
-	jump_held = true;
-	alarm_set(0, 20);
+	if(can_long_jump){
+		v_spd = jump_spd*3;
+		h_spd = sign(h_spd)*5;
+		can_long_jump = false;
+		jump_held = false;
+		alarm_set(0, -1);
+	}else{
+		v_spd = jump_spd;
+		jump_held = true;
+		alarm_set(0, 20);
+	}
 }else if (jump_held){
 	v_spd = jump_spd;
 	jump_held = true;
