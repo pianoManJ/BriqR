@@ -15,7 +15,7 @@ if(input_d_mode){
 
 //horizontal movement
 
-//test subpixel movement
+//test subpixel movement (debug)
 if(keyboard_check_pressed(ord("Q"))){
 	exact_x -= 0.1
 }
@@ -43,7 +43,17 @@ if(input_brake && is_grounded){
 	}
 	briq_temp += abs(h_spd);
 }
-
+if(is_grounded){
+	if(abs(h_spd) >= ground_cap){
+		h_spd = sign(h_spd)*ground_cap;
+	}
+}else{
+	if(abs(h_spd) >= air_cap_hard){
+		h_spd = sign(h_spd)*air_cap_hard;
+	}else if(abs(h_spd) >= air_cap_soft){
+		h_spd = sign(h_spd)*air_cap_soft;
+	}
+}
 //vertical movement
 v_spd += grav;
 if(input_ignite && briq_charge > 0){
@@ -86,7 +96,9 @@ if((input_jump_press && is_grounded)){//logic for starting jump from ground
 }
 
 var will_collide_y = tile_meeting(x, round(exact_y+v_spd), "Tiles_1");
+
 //is_grounded check, sets vertical speed to zero when grounded
+grounded_before = is_grounded;
 if(v_spd > 0){ //check if Briquette is falling
 	if(will_collide_y){
 		is_grounded = true;
@@ -95,6 +107,12 @@ if(v_spd > 0){ //check if Briquette is falling
 	}
 }else{
 	is_grounded = false;
+}
+//soft air speed cap value calculation
+if(is_grounded != grounded_before){
+	if(!is_grounded){
+		air_cap_soft = abs(h_spd) + 5;
+	}
 }
 
 //position calculations.

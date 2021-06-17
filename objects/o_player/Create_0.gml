@@ -15,8 +15,13 @@ brake_acc = 0.15;
 speed_up_ground = 0.1;
 grav =  0.5;
 jump_spd = -2;
+ground_cap = 5;
+air_cap_soft = 5;
+air_cap_hard = 15;
+added_air_speed = 0;
 
 //state checks
+grounded_before = true;
 is_grounded = true;
 jump_held = false;
 
