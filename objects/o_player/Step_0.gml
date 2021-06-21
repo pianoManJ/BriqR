@@ -1,12 +1,21 @@
 /// @description Handles actions of player character
 //input checks
-input_left = keyboard_check(ord("A"));
-input_right = keyboard_check(ord("D"));
-input_jump_press = keyboard_check_pressed(ord("J"));
-input_jump_down = keyboard_check(ord("J"));
-input_brake = keyboard_check(ord("K"));
-input_ignite = keyboard_check_pressed(ord("H"));
-input_d_mode = keyboard_check_pressed(vk_enter);
+gamepad_slot = 0;
+gp_num = gamepad_get_device_count();
+for(var i = 0; i < gp_num; gamepad_slot ++){
+	if(gamepad_is_connected(i)){
+		gamepad_slot = i;
+		break;
+	}
+}
+
+input_left = keyboard_check(ord("A"))||gamepad_button_check(gamepad_slot, gp_padl);
+input_right = keyboard_check(ord("D"))||gamepad_button_check(gamepad_slot, gp_padr);
+input_jump_press = keyboard_check_pressed(ord("J"))||gamepad_button_check_pressed(gamepad_slot, gp_face1);
+input_jump_down = keyboard_check(ord("J"))||gamepad_button_check(gamepad_slot, gp_face1);
+input_brake = keyboard_check(ord("K"))||gamepad_button_check(gamepad_slot, gp_shoulderrb);
+input_ignite = keyboard_check_pressed(ord("H"))||gamepad_button_check_pressed(gamepad_slot, gp_face2);
+input_d_mode = keyboard_check_pressed(vk_enter)||gamepad_button_check_pressed(gamepad_slot, gp_start);
 
 //debug mode toggle
 if(input_d_mode){
