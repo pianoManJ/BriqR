@@ -8,9 +8,11 @@ for(var i = 0; i < gp_num; gamepad_slot ++){
 		break;
 	}
 }
+h_axis = gamepad_axis_value(gamepad_slot, gp_axislh);
+v_axis = gamepad_axis_value(gamepad_slot, gp_axislv);
 
-input_left = keyboard_check(ord("A"))||gamepad_button_check(gamepad_slot, gp_padl);
-input_right = keyboard_check(ord("D"))||gamepad_button_check(gamepad_slot, gp_padr);
+input_left = keyboard_check(ord("A"))||gamepad_button_check(gamepad_slot, gp_padl)||(h_axis < -0.7);
+input_right = keyboard_check(ord("D"))||gamepad_button_check(gamepad_slot, gp_padr)||(h_axis > 0.7);
 input_jump_press = keyboard_check_pressed(ord("J"))||gamepad_button_check_pressed(gamepad_slot, gp_face1);
 input_jump_down = keyboard_check(ord("J"))||gamepad_button_check(gamepad_slot, gp_face1);
 input_brake = keyboard_check(ord("K"))||gamepad_button_check(gamepad_slot, gp_shoulderrb);
@@ -127,6 +129,9 @@ if(is_grounded != grounded_before){
 //position calculations.
 if(will_collide_y){ //y position calculations
 	var i = sign(v_spd);
+	if(i<0){
+		jump_held = false;
+	}
 	v_spd=0;
 	while(!tile_meeting(x, y+i, "Tiles_1")){
 		y += i;

@@ -15,7 +15,7 @@ brake_acc = 0.15;
 speed_up_ground = 0.1;
 grav =  0.5;
 jump_spd = -2;
-ground_cap = 5;
+ground_cap = 3;
 air_cap_soft = 5;
 air_cap_hard = 15;
 added_air_speed = 0;
@@ -32,6 +32,8 @@ input_jump_press = false; //jump controls
 input_jump_down = false;
 input_brake = false; //charge and ignite controls
 input_ignite = false;
+h_axis = 0;
+v_axis = 0;
 
 //heat and charge
 briq_temp_MAX = 200;
