@@ -69,6 +69,7 @@ if(is_grounded){
 v_spd += grav;
 if(input_ignite && briq_charge > 0){
 	briq_charge -= 1;
+	instance_create_layer(x,y,"instances",o_fire_t)
 	if(is_grounded){
 		if(h_spd != 0){
 			can_long_jump = true;

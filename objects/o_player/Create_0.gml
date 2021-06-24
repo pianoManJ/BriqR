@@ -36,7 +36,7 @@ h_axis = 0;
 v_axis = 0;
 
 //heat and charge
-briq_temp_MAX = 200;
+briq_temp_MAX = 100;
 briq_charge_MAX = 8;
 briq_temp = 0;
 briq_charge = 0;
