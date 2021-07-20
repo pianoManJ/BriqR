@@ -1,6 +1,6 @@
 /// @description Setup of player character
 //debug mode variable
-d_mode_on = false;
+d_mode_on = true;
 input_d_mode = false;
 
 //position variables
