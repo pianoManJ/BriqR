@@ -24,7 +24,7 @@ if(input_d_mode){
 	d_mode_on = abs(d_mode_on-1); //should switch d_mode_on between true and false
 }
 
-//horizontal movement
+/*----------HORIZONTAL MOVEMENT----------*/
 
 //test subpixel movement (debug)
 if(keyboard_check_pressed(ord("Q"))){
@@ -34,10 +34,16 @@ if(keyboard_check_pressed(ord("E"))){
 	exact_x += 0.1
 }
 
+//inputs for left and right. will accelerate up to the speed cap
 if(input_left){
-	h_spd -= speed_up_ground;
+	if(abs(h_spd)<=ground_cap||!is_grounded){
+		h_spd -= speed_up_ground;
+	}
 }else if(input_right){
-	h_spd += speed_up_ground;
+	if(abs(h_spd)<=ground_cap||!is_grounded){
+		h_spd += speed_up_ground;
+	}
+//no directional inputs will slow the player to a halt
 }else{
 	if(sign(h_spd) != sign(h_spd+sign(-1*slow_down*sign(h_spd)))){
 		h_spd = 0;
@@ -46,6 +52,7 @@ if(input_left){
 	}
 }
 
+//brake inputs
 if(input_brake && is_grounded){
 	if(sign(h_spd) != sign(h_spd+sign(-1 * brake_acc*sign(h_spd)))){
 		h_spd = 0;
@@ -54,9 +61,16 @@ if(input_brake && is_grounded){
 	}
 	briq_temp += abs(h_spd);
 }
+
+//speed cap checks
 if(is_grounded){
 	if(abs(h_spd) >= ground_cap){
-		h_spd = sign(h_spd)*ground_cap;
+		//h_spd = sign(h_spd)*ground_cap;
+		if(sign(h_spd-(sign(h_spd)*ground_cap)) != sign((h_spd-(sign(h_spd)*speed_up_ground))-(sign(h_spd)*ground_cap))){
+			h_spd = sign(h_spd)*ground_cap;
+		}else{
+			h_spd += -1*sign(h_spd)*speed_up_ground;
+		}
 	}
 }else{
 	if(abs(h_spd) >= air_cap_hard){
@@ -65,15 +79,20 @@ if(is_grounded){
 		h_spd = sign(h_spd)*air_cap_soft;
 	}
 }
-//vertical movement
+
+/*----------VERTICAL MOVEMENT----------*/
+
 v_spd += grav;
+
+//ignite logic
 if(input_ignite && briq_charge > 0){
 	briq_charge -= 1;
 	instance_create_layer(x,y,"instances",o_fire_t)
 	if(is_grounded){
 		if(h_spd != 0){
+			h_spd += 3*sign(h_spd);
 			can_long_jump = true;
-			alarm_set(0, 40);
+			alarm_set(1, 40);
 		}
 	}else{
 		v_spd = -5;
@@ -91,17 +110,9 @@ if(input_jump_down && jump_held){
 }
 
 if((input_jump_press && is_grounded)){//logic for starting jump from ground
-	if(can_long_jump){
-		v_spd = jump_spd*3;
-		h_spd = sign(h_spd)*5;
-		can_long_jump = false;
-		jump_held = false;
-		alarm_set(0, -1);
-	}else{
-		v_spd = jump_spd;
-		jump_held = true;
-		alarm_set(0, 20);
-	}
+	v_spd = jump_spd;
+	jump_held = true;
+	alarm_set(0, 20);
 }else if (jump_held){
 	v_spd = jump_spd;
 	jump_held = true;
@@ -127,8 +138,10 @@ if(is_grounded != grounded_before){
 	}
 }
 
-//position calculations.
-if(will_collide_y){ //y position calculations
+/*----------POSITION CALCULATIONS----------*/
+
+//y position calculations
+if(will_collide_y){ 
 	var i = sign(v_spd);
 	if(i<0){
 		jump_held = false;
@@ -143,8 +156,9 @@ if(will_collide_y){ //y position calculations
 	y = round(exact_y);
 }
 
+//x position calculations
 var will_collide_x = tile_meeting(round(exact_x+h_spd), y, "Tiles_1");
-if(will_collide_x){//x position calculations
+if(will_collide_x){
 	var i = sign(h_spd);
 	h_spd=0;
 	while(!tile_meeting(x+i, y, "Tiles_1")){
