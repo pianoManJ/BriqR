@@ -1,3 +1,3 @@
-/// @description Insert description here
+/// @description handles JUST brakes
 // You can write your code in this editor
-can_long_jump = false;
+just_brake = false;

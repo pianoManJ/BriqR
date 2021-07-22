@@ -24,6 +24,8 @@ added_air_speed = 0;
 grounded_before = true;
 is_grounded = true;
 jump_held = false;
+just_brake = false;
+jump_leniency = false;
 
 //input checks
 input_left = false; //lateral controls

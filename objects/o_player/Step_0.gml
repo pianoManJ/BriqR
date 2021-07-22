@@ -16,8 +16,10 @@ input_right = keyboard_check(ord("D"))||gamepad_button_check(gamepad_slot, gp_pa
 input_jump_press = keyboard_check_pressed(ord("J"))||gamepad_button_check_pressed(gamepad_slot, gp_face1);
 input_jump_down = keyboard_check(ord("J"))||gamepad_button_check(gamepad_slot, gp_face1);
 input_brake = keyboard_check(ord("K"))||gamepad_button_check(gamepad_slot, gp_shoulderrb);
+input_brake_press = keyboard_check_pressed(ord("K"))||gamepad_button_check_pressed(gamepad_slot, gp_shoulderrb);
 input_ignite = keyboard_check_pressed(ord("H"))||gamepad_button_check_pressed(gamepad_slot, gp_face2);
 input_d_mode = keyboard_check_pressed(vk_enter)||gamepad_button_check_pressed(gamepad_slot, gp_start);
+
 
 //debug mode toggle
 if(input_d_mode){
@@ -60,6 +62,12 @@ if(input_brake && is_grounded){
 		h_spd -= sign(h_spd)* brake_acc;
 	}
 	briq_temp += abs(h_spd);
+}
+
+if(input_brake_press && just_brake && h_spd != 0){
+	briq_charge ++;
+	just_brake = false;
+	alarm_set(1,-1)
 }
 
 //speed cap checks
@@ -109,10 +117,12 @@ if(input_jump_down && jump_held){
 	alarm_set(0, -1);
 }
 
-if((input_jump_press && is_grounded)){//logic for starting jump from ground
+if(input_jump_press &&(is_grounded||jump_leniency)){//logic for starting jump from ground
 	v_spd = jump_spd;
 	jump_held = true;
 	alarm_set(0, 20);
+	jump_leniency = false; //cancels jump leniency
+	alarm_set(2,-1);
 }else if (jump_held){
 	v_spd = jump_spd;
 	jump_held = true;
@@ -131,10 +141,17 @@ if(v_spd > 0){ //check if Briquette is falling
 }else{
 	is_grounded = false;
 }
-//soft air speed cap value calculation
+//changes in grounded state
 if(is_grounded != grounded_before){
 	if(!is_grounded){
-		air_cap_soft = abs(h_spd) + 5;
+		air_cap_soft = abs(h_spd) + 5;//adjusts the soft air speed cap
+		if(v_spd >= 0){
+			jump_leniency = true; //activates jump leniency
+			alarm_set(2, 7);
+		}
+	}else{
+		just_brake = true;//allows player to perform a perfect brake
+		alarm_set(1, 3);
 	}
 }
 

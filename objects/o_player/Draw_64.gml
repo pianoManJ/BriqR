@@ -10,7 +10,9 @@ if(d_mode_on){
 	draw_text(8,56,"Player Charges: "+string(briq_charge)+" / "+string(briq_charge_MAX));
 	draw_text(8,68,"h_axis: " +string(h_axis));
 	draw_text(8,80,"grounded: " +string(is_grounded));
-	draw_text(8,92, "window size: "+string(window_get_width())+"x"+string(window_get_height()))
+	draw_text(8,92, "window size: "+string(window_get_width())+"x"+string(window_get_height()));
+	draw_text(8,104, "JUST BRAKE POSSIBLE: " + string(just_brake));
+	draw_text(8,116, "JUMP LENIENCY POSSIBLE: " + string(jump_leniency));
 }
 
 space = 48;
