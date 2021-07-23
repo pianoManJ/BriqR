@@ -65,7 +65,9 @@ if(input_brake && is_grounded){
 }
 
 if(input_brake_press && just_brake && h_spd != 0){
-	briq_charge ++;
+	if(briq_charge < briq_charge_MAX){
+		briq_charge ++;
+	}
 	just_brake = false;
 	alarm_set(1,-1)
 }
@@ -144,7 +146,7 @@ if(v_spd > 0){ //check if Briquette is falling
 //changes in grounded state
 if(is_grounded != grounded_before){
 	if(!is_grounded){
-		air_cap_soft = abs(h_spd) + 5;//adjusts the soft air speed cap
+		air_cap_soft = abs(h_spd) + 2;//adjusts the soft air speed cap
 		if(v_spd >= 0){
 			jump_leniency = true; //activates jump leniency
 			alarm_set(2, 7);
