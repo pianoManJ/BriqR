@@ -14,6 +14,7 @@
     {"id":{"name":"o_fire_t","path":"objects/o_fire_t/o_fire_t.yy",},"order":2,},
     {"id":{"name":"player_t","path":"sprites/player_t/player_t.yy",},"order":0,},
     {"id":{"name":"spr_test_fire","path":"sprites/spr_test_fire/spr_test_fire.yy",},"order":2,},
+    {"id":{"name":"find_subroom","path":"scripts/find_subroom/find_subroom.yy",},"order":1,},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":0,},
   ],
   "Options": [
@@ -56,7 +57,7 @@
   ],
   "IncludedFiles": [],
   "MetaData": {
-    "IDEVersion": "2.3.3.570",
+    "IDEVersion": "2.3.3.574",
   },
   "resourceVersion": "1.4",
   "name": "BriquetteR",

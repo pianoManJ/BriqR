@@ -13,6 +13,8 @@ if(d_mode_on){
 	draw_text(8,92, "window size: "+string(window_get_width())+"x"+string(window_get_height()));
 	draw_text(8,104, "JUST BRAKE POSSIBLE: " + string(just_brake));
 	draw_text(8,116, "JUMP LENIENCY POSSIBLE: " + string(jump_leniency));
+	draw_text(8,128, "Room: " + room_get_name(room));
+	draw_text(8,140, "Sub-room: "+string(find_subroom(x, y, o_game.sub_rooms)));
 }
 
 space = 48;

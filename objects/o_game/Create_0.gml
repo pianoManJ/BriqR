@@ -12,6 +12,38 @@ var _dwidth = display_get_width();
 var _dheight = display_get_height();
 var _xpos = (_dwidth /2) - 320*2;
 var _ypos = (_dheight /2) -192*2;
+
+
 window_set_rectangle(_xpos, _ypos, 320*4, 192*4);
 
 surface_resize(application_surface, 320*4, 192*4);
+
+sub_rooms = [
+		{
+			pos : 
+			{
+				xx : 0,
+				yy : 0
+			},		
+			size :
+			{
+				ww : view_wport[0],
+				hh : view_hport[0]
+			}
+		}
+	];
+if(room_get_name(room) == "Room2"){
+	sub_rooms[0] = 
+	{
+		pos : 
+		{
+			xx : 0,
+			yy : 0
+		},		
+		size :
+		{
+			ww : view_wport[0],
+			hh : view_hport[0]
+		}
+	};
+}
