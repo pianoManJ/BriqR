@@ -1,6 +1,7 @@
 {
   "resources": [
     {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},"order":1,},
+    {"id":{"name":"create_subroom","path":"scripts/create_subroom/create_subroom.yy",},"order":2,},
     {"id":{"name":"d_font","path":"fonts/d_font/d_font.yy",},"order":0,},
     {"id":{"name":"tile_meeting","path":"scripts/tile_meeting/tile_meeting.yy",},"order":0,},
     {"id":{"name":"heat_guage_base","path":"sprites/heat_guage_base/heat_guage_base.yy",},"order":5,},

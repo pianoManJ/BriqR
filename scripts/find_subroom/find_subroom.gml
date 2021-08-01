@@ -7,8 +7,8 @@
 /// @param subrm
 function find_subroom(xx, yy, subrm){
 	for(i=0; i < array_length(subrm); i++){
-		if((xx > subrm[i].pos.xx) && (xx < (subrm[i].pos.xx + subrm[i].size.ww))){
-			if((yy > subrm[i].pos.yy) && (yy < (subrm[i].pos.yy + subrm[i].size.hh))){
+		if((xx >= subrm[i].xx) && (xx <= (subrm[i].xx + subrm[i].ww))){
+			if((yy >= subrm[i].yy) && (yy <= (subrm[i].yy + subrm[i].hh))){
 				return i;
 			}
 		}
